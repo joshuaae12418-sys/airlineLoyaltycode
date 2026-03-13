@@ -1,7 +1,9 @@
 ﻿namespace AirlineModels
 {
-    public class Class1
+    public class LoyaltyAccount
     {
-
+        public string Name { get; set; }
+        public string RedeemCode { get; set; }
+        public int Points { get; set; }
     }
 }
