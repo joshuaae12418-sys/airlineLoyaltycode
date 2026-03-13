@@ -21,7 +21,7 @@ namespace AirlineLoyaltyCode
                 Console.WriteLine("-----------------------------------");
                 Console.WriteLine("1. REDEEM");
                 Console.WriteLine("2. EDIT");
-                Console.WriteLine("3. VIEW"); s
+                Console.WriteLine("3. VIEW"); 
                 Console.WriteLine("4. DELETE");
                 Console.WriteLine("5. HELP");
                 Console.WriteLine("6. EXIT");
