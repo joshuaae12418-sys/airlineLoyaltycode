@@ -1,3 +1,6 @@
 <Solution>
+  <Project Path="AirlineAppService/AirlineDataService.csproj" />
   <Project Path="AirlineLoyaltyCode/AirlineLoyaltyCode.csproj" />
+  <Project Path="AirlineManagementAppService/AirlineManagementAppService.csproj" />
+  <Project Path="AirlineModels/AirlineModels.csproj" />
 </Solution>
