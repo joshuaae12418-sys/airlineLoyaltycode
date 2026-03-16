@@ -1,41 +1,17 @@
-﻿using AirlineModels;
-using AirlineDataService;
+﻿using System;
+using AirlineManagementAppService;
 
-namespace AirlineManagementAppService
+namespace AirlineLoyaltyCode
 {
-    public class LoyaltyManager
+    class Program
     {
-        private LoyaltyDataService dataService = new LoyaltyDataService();
-
-        public void RedeemPoints(string name, string code)
+        static void Main()
         {
-            var acc = dataService.GetAccount(name);
-            if (acc != null && code == "1234567")
-            {
-                acc.Points += 50;
-            }
-        }
+            Console.Write("Write Your Name: ");
+            string name = Console.ReadLine();
 
-        public LoyaltyAccount CreateAccount(string name)
-        {
-            var acc = new LoyaltyAccount { Name = name, Points = 0 };
-            dataService.AddAccount(acc);
-            return acc;
-        }
-
-        public LoyaltyAccount ViewAccount(string name)
-        {
-            return dataService.GetAccount(name);
-        }
-
-        public void EditPoints(string name, int points)
-        {
-            dataService.UpdatePoints(name, points);
-        }
-
-        public void DeleteAccount(string name)
-        {
-            dataService.DeleteAccount(name);
+            MenuManager menu = new MenuManager();
+            menu.Run(name);
         }
     }
 }

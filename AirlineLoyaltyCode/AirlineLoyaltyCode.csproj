@@ -7,4 +7,22 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="AirlineAppService\**" />
+    <Compile Remove="AirlineManagementAppService\**" />
+    <Compile Remove="AirlineModels\**" />
+    <EmbeddedResource Remove="AirlineAppService\**" />
+    <EmbeddedResource Remove="AirlineManagementAppService\**" />
+    <EmbeddedResource Remove="AirlineModels\**" />
+    <None Remove="AirlineAppService\**" />
+    <None Remove="AirlineManagementAppService\**" />
+    <None Remove="AirlineModels\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AirlineAppService\AirlineDataService.csproj" />
+    <ProjectReference Include="..\AirlineManagementAppService\AirlineManagementAppService.csproj" />
+    <ProjectReference Include="..\AirlineModels\AirlineModels.csproj" />
+  </ItemGroup>
+
 </Project>
