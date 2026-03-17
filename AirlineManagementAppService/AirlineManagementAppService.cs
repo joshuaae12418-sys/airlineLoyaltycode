@@ -1,17 +1,16 @@
 ﻿using System;
-using AirlineManagementAppService;
+using AirlineModels;
+using AirlineDataService;
 
-namespace AirlineLoyaltyCode
+namespace AirlineManagementAppService
 {
-    class Program
+    public class MenuManager 
     {
-        static void Main()
+        
+        public void StartProcess(string name)
         {
-            Console.Write("Write Your Name: ");
-            string name = Console.ReadLine();
-
-            MenuManager menu = new MenuManager();
-            menu.Run(name);
+            Console.WriteLine($"Service is processing data for: {name}");
+            
         }
     }
 }

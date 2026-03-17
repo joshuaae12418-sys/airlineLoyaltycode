@@ -7,10 +7,7 @@ namespace AirlineDataService
     {
         private List<LoyaltyAccount> accounts = new List<LoyaltyAccount>();
 
-        public void AddAccount(LoyaltyAccount account)
-        {
-            accounts.Add(account);
-        }
+        public void AddAccount(LoyaltyAccount account) { accounts.Add(account); }
 
         public LoyaltyAccount GetAccount(string name)
         {
@@ -21,17 +18,6 @@ namespace AirlineDataService
         {
             var acc = GetAccount(name);
             if (acc != null) acc.Points = newPoints;
-        }
-
-        public void DeleteAccount(string name)
-        {
-            var acc = GetAccount(name);
-            if (acc != null) accounts.Remove(acc);
-        }
-
-        public List<LoyaltyAccount> GetAllAccounts()
-        {
-            return accounts;
         }
     }
 }

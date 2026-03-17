@@ -20,9 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AirlineAppService\AirlineDataService.csproj" />
     <ProjectReference Include="..\AirlineManagementAppService\AirlineManagementAppService.csproj" />
-    <ProjectReference Include="..\AirlineModels\AirlineModels.csproj" />
   </ItemGroup>
 
 </Project>
