@@ -1,14 +1,15 @@
 ﻿using System;
 using AirlineModels;
 using AirlineDataService;
+using System.Numerics;
 
 namespace AirlineManagementAppService
 {
-    public class LoyaltyService 
+    public class LoyaltyService
     {
         private LoyaltyDataService dataService;
-        
-            private Dictionary<string, int> redeemCodes;
+
+        private Dictionary<string, int> redeemCodes;
 
         public LoyaltyService()
         {
@@ -20,8 +21,8 @@ namespace AirlineManagementAppService
                 { "SKYBONUS200", 200 },
                 { "TRAVEL300", 300 },
                 { "STINGLIKEABEE", 50 },
-                { "JET2HOLIDAY", 20 }   
-            };  
+                { "JET2HOLIDAY", 20 }
+            };
         }
 
         public void Redeem(string code)
@@ -45,6 +46,30 @@ namespace AirlineManagementAppService
             return dataService.GetPoints();
         }
 
+        public void EditPoints(int newPoints)
+        {
+            if (newPoints < 0)
+            {
+                newPoints = 0; 
+            }
 
+            dataService.UpdatePoints(newPoints);
+
+            Console.WriteLine($"Points set successfully. Current Points: {dataService.GetPoints()}");
+        }
+
+        public void DeletePoints(int pointsToDeduct)
+        {
+            if (pointsToDeduct < 0)
+            {
+                Console.WriteLine("Cannot deduct negative points.");
+                return;
+            }
+
+            dataService.DeductPoints(pointsToDeduct);
+            Console.WriteLine($"Points deducted successfully. Current Points: {dataService.GetPoints()}");
+        }
     }
-}
+    }
+
+

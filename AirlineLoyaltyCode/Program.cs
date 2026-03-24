@@ -18,8 +18,9 @@ namespace AirlineLoyaltyCode
                 Console.WriteLine("\nMenu:");
                 Console.WriteLine("1. Redeem Points");
                 Console.WriteLine("2. Check Points");
-                Console.WriteLine("3. Exit");
-
+                Console.WriteLine("3. Edit Points");
+                Console.WriteLine("4. Deduct Points");
+                Console.WriteLine("5. Exit");
                 Console.WriteLine("Enter your choice:");
                 string choice = Console.ReadLine();
 
@@ -36,6 +37,32 @@ namespace AirlineLoyaltyCode
                         Console.WriteLine($"You have {points} points.");
                         break;
                     case "3":
+                        Console.WriteLine("Enter the desired points:");
+                        
+
+                        if (int.TryParse(Console.ReadLine(), out points))
+                        {
+                            loyaltyService.EditPoints(points);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid input");
+                        }
+                        break;
+
+                        case "4":
+                        Console.Write("Enter points to deduct: ");
+                        int pointsToDeduct;
+                        if (int.TryParse(Console.ReadLine(), out pointsToDeduct))
+                        {
+                            loyaltyService.DeletePoints(pointsToDeduct);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid input.");
+                        }
+                        break;
+                    case "5":
                         Console.WriteLine("Exitingg program");
                         exit = true;
                         break;
@@ -49,3 +76,4 @@ namespace AirlineLoyaltyCode
         }
     }
 }   
+

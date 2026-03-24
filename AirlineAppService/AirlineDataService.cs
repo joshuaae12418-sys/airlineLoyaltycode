@@ -22,6 +22,25 @@ namespace AirlineDataService
         {
             return account.Points;
         }
+
+        public void UpdatePoints(int points)
+        {
+            account.Points = points;
+        }
+
+
+        public void DeductPoints(int pointsToDeduct)
+        {
+            int currentPoints = account.Points;
+            int newPoints = currentPoints - pointsToDeduct;
+
+            if (newPoints < 0)
+            {
+                newPoints = 0;
+            }
+
+            account.Points = newPoints;
+        }
     }
 
 }
