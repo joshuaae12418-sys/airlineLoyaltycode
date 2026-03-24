@@ -1,23 +1,27 @@
 ﻿using System.Collections.Generic;
 using AirlineModels;
+using Microsoft.VisualBasic;
 
 namespace AirlineDataService
 {
     public class LoyaltyDataService
     {
-        private List<LoyaltyAccount> accounts = new List<LoyaltyAccount>();
 
-        public void AddAccount(LoyaltyAccount account) { accounts.Add(account); }
+        private LoyaltyAccount account;
 
-        public LoyaltyAccount GetAccount(string name)
+        public LoyaltyDataService()
         {
-            return accounts.Find(a => a.Name == name);
+            account = new LoyaltyAccount();
+        }
+        public void AddPoints(int points)
+        {
+            account.Points += points;
         }
 
-        public void UpdatePoints(string name, int newPoints)
+        public int GetPoints()
         {
-            var acc = GetAccount(name);
-            if (acc != null) acc.Points = newPoints;
+            return account.Points;
         }
     }
+
 }
