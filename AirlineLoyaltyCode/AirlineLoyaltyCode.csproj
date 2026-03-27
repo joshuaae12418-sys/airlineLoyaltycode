@@ -20,6 +20,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Data.SqlClient" Version="4.9.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AirlineAppService\AirlineDataService.csproj" />
     <ProjectReference Include="..\AirlineManagementAppService\AirlineManagementAppService.csproj" />
   </ItemGroup>
 

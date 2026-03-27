@@ -24,21 +24,24 @@ namespace AirlineManagementAppService
 
         public void Redeem(string code)
         {
+            
             if (!_redeemCodes.ContainsKey(code))
             {
                 Console.WriteLine("Invalid code.");
                 return;
             }
 
+           
             if (_dataService.HasCodeBeenUsed(code))
             {
                 Console.WriteLine($"Error: {code} has already been used.");
                 return;
             }
 
+           
             int points = _redeemCodes[code];
             _dataService.AddPoints(points, code);
-            Console.WriteLine($"Redeemed {code}! Current Total Points: {_dataService.GetPoints()}");
+            Console.WriteLine($"Successfully Redeemed {code}! Current Total: {GetPoints()}");
         }
 
         public int GetPoints() => _dataService.GetPoints();

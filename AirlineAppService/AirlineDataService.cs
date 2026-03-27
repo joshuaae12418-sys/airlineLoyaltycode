@@ -1,47 +1,58 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Data.SqlClient;
 using AirlineModels;
 
 namespace AirlineDataService
 {
     public class LoyaltyDataService
     {
-        private readonly JSON _jsonPersistence;
+        private readonly DataBase _db; 
 
         public LoyaltyDataService()
         {
-            _jsonPersistence = new JSON();
+            _db = new DataBase(); 
         }
 
         public void AddPoints(int points, string code)
         {
-            List<LoyaltyAccount> history = _jsonPersistence.LoadData();
-
-            LoyaltyAccount newEntry = new LoyaltyAccount
+            using (var conn = _db.GetConnection())
             {
-                Points = points,
-                RedeemedCode = code
-            };
+                string query = "INSERT INTO dbo.Accounts (Points, RedeemedCode) VALUES (@pts, @cd)";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@pts", points);
+                cmd.Parameters.AddWithValue("@cd", code);
 
-            history.Add(newEntry);
-            _jsonPersistence.SaveData(history);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
         }
 
         public bool HasCodeBeenUsed(string code)
         {
-            var history = _jsonPersistence.LoadData();
-            return history.Any(x => x.RedeemedCode == code);
+            using (var conn = _db.GetConnection())
+            {
+                string query = "SELECT COUNT(1) FROM dbo.Accounts WHERE RedeemedCode = @cd";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@cd", code);
+
+                conn.Open();
+                return (int)cmd.ExecuteScalar() > 0;
+            }
         }
 
         public int GetPoints()
         {
-            var history = _jsonPersistence.LoadData();
-            return history.Sum(x => x.Points);
+            using (var conn = _db.GetConnection())
+            {
+                string query = "SELECT ISNULL(SUM(Points), 0) FROM dbo.Accounts";
+                SqlCommand cmd = new SqlCommand(query, conn);
+
+                conn.Open();
+                return Convert.ToInt32(cmd.ExecuteScalar());
+            }
         }
 
         public void UpdatePoints(int points) => AddPoints(points, "MANUAL_EDIT");
-
-        public void DeductPoints(int pointsToDeduct) => AddPoints(-pointsToDeduct, "DEDUCTION");
+        public void DeductPoints(int points) => AddPoints(-points, "DEDUCTION");
     }
 }

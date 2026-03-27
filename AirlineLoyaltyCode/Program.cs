@@ -6,15 +6,15 @@ namespace AirlineLoyaltyCode
     class Program
     {
 
-        static void Main(string[] args)
-        {
-            LoyaltyService loyaltyService = new LoyaltyService();
+    static void Main(string[] args)
+    {
+    LoyaltyService loyaltyService = new LoyaltyService();
 
-            Console.WriteLine("Welcome to Airline Loyalty Program!");
+    Console.WriteLine("Welcome to Airline Loyalty Program!");
             bool exit = false;
 
-            while (!exit)
-            {
+    while (!exit)
+    {
                 Console.WriteLine("\nMenu:");
                 Console.WriteLine("1. Redeem Points");
                 Console.WriteLine("2. Check Points");
