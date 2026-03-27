@@ -1,21 +1,18 @@
 ﻿using System;
-using AirlineModels;
+using System.Collections.Generic;
 using AirlineDataService;
-using System.Numerics;
 
 namespace AirlineManagementAppService
 {
     public class LoyaltyService
     {
-        private LoyaltyDataService dataService;
-
-        private Dictionary<string, int> redeemCodes;
+        private readonly LoyaltyDataService _dataService;
+        private readonly Dictionary<string, int> _redeemCodes;
 
         public LoyaltyService()
         {
-            dataService = new LoyaltyDataService();
-
-            redeemCodes = new Dictionary<string, int>()
+            _dataService = new LoyaltyDataService();
+            _redeemCodes = new Dictionary<string, int>
             {
                 { "FLYHIGH100", 100 },
                 { "SKYBONUS200", 200 },
@@ -27,49 +24,25 @@ namespace AirlineManagementAppService
 
         public void Redeem(string code)
         {
-            if (redeemCodes.ContainsKey(code))
+            if (!_redeemCodes.ContainsKey(code))
             {
-                int points = redeemCodes[code];
-                dataService.AddPoints(points);
-
-                Console.WriteLine($"Code redeemed successfully! You earned {points} points.");
-                Console.WriteLine($"Cyrrent Points: {dataService.GetPoints()}");
-            }
-            else
-            {
-                Console.WriteLine("Invalid redeem code. Please try again.");
-            }
-        }
-
-        public int GetPoints()
-        {
-            return dataService.GetPoints();
-        }
-
-        public void EditPoints(int newPoints)
-        {
-            if (newPoints < 0)
-            {
-                newPoints = 0; 
-            }
-
-            dataService.UpdatePoints(newPoints);
-
-            Console.WriteLine($"Points set successfully. Current Points: {dataService.GetPoints()}");
-        }
-
-        public void DeletePoints(int pointsToDeduct)
-        {
-            if (pointsToDeduct < 0)
-            {
-                Console.WriteLine("Cannot deduct negative points.");
+                Console.WriteLine("Invalid code.");
                 return;
             }
 
-            dataService.DeductPoints(pointsToDeduct);
-            Console.WriteLine($"Points deducted successfully. Current Points: {dataService.GetPoints()}");
+            if (_dataService.HasCodeBeenUsed(code))
+            {
+                Console.WriteLine($"Error: {code} has already been used.");
+                return;
+            }
+
+            int points = _redeemCodes[code];
+            _dataService.AddPoints(points, code);
+            Console.WriteLine($"Redeemed {code}! Current Total Points: {_dataService.GetPoints()}");
         }
-    }
-    }
 
-
+        public int GetPoints() => _dataService.GetPoints();
+        public void EditPoints(int points) => _dataService.UpdatePoints(points);
+        public void DeletePoints(int points) => _dataService.DeductPoints(points);
+    }
+}

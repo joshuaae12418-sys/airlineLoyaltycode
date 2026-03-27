@@ -1,46 +1,47 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using AirlineModels;
-using Microsoft.VisualBasic;
 
 namespace AirlineDataService
 {
     public class LoyaltyDataService
     {
-
-        private LoyaltyAccount account;
+        private readonly JSON _jsonPersistence;
 
         public LoyaltyDataService()
         {
-            account = new LoyaltyAccount();
+            _jsonPersistence = new JSON();
         }
-        public void AddPoints(int points)
+
+        public void AddPoints(int points, string code)
         {
-            account.Points += points;
+            List<LoyaltyAccount> history = _jsonPersistence.LoadData();
+
+            LoyaltyAccount newEntry = new LoyaltyAccount
+            {
+                Points = points,
+                RedeemedCode = code
+            };
+
+            history.Add(newEntry);
+            _jsonPersistence.SaveData(history);
+        }
+
+        public bool HasCodeBeenUsed(string code)
+        {
+            var history = _jsonPersistence.LoadData();
+            return history.Any(x => x.RedeemedCode == code);
         }
 
         public int GetPoints()
         {
-            return account.Points;
+            var history = _jsonPersistence.LoadData();
+            return history.Sum(x => x.Points);
         }
 
-        public void UpdatePoints(int points)
-        {
-            account.Points = points;
-        }
+        public void UpdatePoints(int points) => AddPoints(points, "MANUAL_EDIT");
 
-
-        public void DeductPoints(int pointsToDeduct)
-        {
-            int currentPoints = account.Points;
-            int newPoints = currentPoints - pointsToDeduct;
-
-            if (newPoints < 0)
-            {
-                newPoints = 0;
-            }
-
-            account.Points = newPoints;
-        }
+        public void DeductPoints(int pointsToDeduct) => AddPoints(-pointsToDeduct, "DEDUCTION");
     }
-
 }
