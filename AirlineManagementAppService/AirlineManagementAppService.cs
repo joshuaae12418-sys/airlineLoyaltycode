@@ -6,10 +6,10 @@ namespace AirlineManagementAppService
 {
     public class LoyaltyService
     {
-        private readonly ILoyaltyDataService dAtaService;
-        private readonly Dictionary<string, int> redeemCodes;
+       
+        ILoyaltyDataService dAtaService;
+        Dictionary<string, int> redeemCodes;
 
-      
         public LoyaltyService(ILoyaltyDataService serviceProvider)
         {
             dAtaService = serviceProvider;
@@ -25,7 +25,6 @@ namespace AirlineManagementAppService
 
         public void Redeem(string code)
         {
-           
             if (redeemCodes.ContainsKey(code))
             {
                 if (dAtaService.HasCodeBeenUsed(code))

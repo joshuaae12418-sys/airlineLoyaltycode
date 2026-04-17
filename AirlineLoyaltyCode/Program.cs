@@ -2,13 +2,13 @@
 using AirlineManagementAppService;
 using AirlineDataService;
 
+
 namespace AirlineLoyaltyCode
 {
     class Program
     {
-     
-        static LoyaltyService loyaltyService = new LoyaltyService(new InMemoryDataService());
 
+        static LoyaltyService loyaltyService = new LoyaltyService(new LoyaltyDataService());
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to Airline Loyalty Program!");
