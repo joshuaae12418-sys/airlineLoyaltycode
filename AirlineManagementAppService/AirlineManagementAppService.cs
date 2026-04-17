@@ -6,13 +6,13 @@ namespace AirlineManagementAppService
 {
     public class LoyaltyService
     {
-        private readonly LoyaltyDataService _dataService;
-        private readonly Dictionary<string, int> _redeemCodes;
+        private readonly LoyaltyDataService dataService;
+        private readonly Dictionary<string, int> redeemCodes;
 
         public LoyaltyService()
         {
-            _dataService = new LoyaltyDataService();
-            _redeemCodes = new Dictionary<string, int>
+            dataService = new LoyaltyDataService();
+            redeemCodes = new Dictionary<string, int>
             {
                 { "FLYHIGH100", 100 },
                 { "SKYBONUS200", 200 },
@@ -25,27 +25,27 @@ namespace AirlineManagementAppService
         public void Redeem(string code)
         {
             
-            if (!_redeemCodes.ContainsKey(code))
+            if (!redeemCodes.ContainsKey(code))
             {
                 Console.WriteLine("Invalid code.");
                 return;
             }
 
            
-            if (_dataService.HasCodeBeenUsed(code))
+            if (dataService.HasCodeBeenUsed(code))
             {
                 Console.WriteLine($"Error: {code} has already been used.");
                 return;
             }
 
            
-            int points = _redeemCodes[code];
-            _dataService.AddPoints(points, code);
+            int points = redeemCodes[code];
+            dataService.AddPoints(points, code);
             Console.WriteLine($"Successfully Redeemed {code}! Current Total: {GetPoints()}");
         }
 
-        public int GetPoints() => _dataService.GetPoints();
-        public void EditPoints(int points) => _dataService.UpdatePoints(points);
-        public void DeletePoints(int points) => _dataService.DeductPoints(points);
+        public int GetPoints() => dataService.GetPoints();
+        public void EditPoints(int points) => dataService.UpdatePoints(points);
+        public void DeletePoints(int points) => dataService.DeductPoints(points);
     }
 }

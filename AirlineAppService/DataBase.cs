@@ -1,16 +1,16 @@
-﻿using System.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 
 namespace AirlineDataService
 {
     public class DataBase
     {
         
-        private readonly string _connectionString =
-            @"Server=localhost\SQLEXPRESS;Database=AccountManagement;Integrated Security=True;";
+        private readonly string connectionString =
+           @"Server=localhost\SQLEXPRESS; Database=AccountManagement; Integrated Security=True; TrustServerCertificate=True; Encrypt=False";
 
         public SqlConnection GetConnection()
         {
-            return new SqlConnection(_connectionString);
+            return new SqlConnection(connectionString);
         }
     }
 }

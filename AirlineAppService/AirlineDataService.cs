@@ -1,21 +1,21 @@
 ﻿using System;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using AirlineModels;
 
 namespace AirlineDataService
 {
     public class LoyaltyDataService
     {
-        private readonly DataBase _db; 
+        private readonly DataBase db; 
 
         public LoyaltyDataService()
         {
-            _db = new DataBase(); 
+            db = new DataBase(); 
         }
 
         public void AddPoints(int points, string code)
         {
-            using (var conn = _db.GetConnection())
+            using (var conn = db.GetConnection())
             {
                 string query = "INSERT INTO dbo.Accounts (Points, RedeemedCode) VALUES (@pts, @cd)";
                 SqlCommand cmd = new SqlCommand(query, conn);
@@ -29,7 +29,7 @@ namespace AirlineDataService
 
         public bool HasCodeBeenUsed(string code)
         {
-            using (var conn = _db.GetConnection())
+            using (var conn = db.GetConnection())
             {
                 string query = "SELECT COUNT(1) FROM dbo.Accounts WHERE RedeemedCode = @cd";
                 SqlCommand cmd = new SqlCommand(query, conn);
@@ -42,7 +42,7 @@ namespace AirlineDataService
 
         public int GetPoints()
         {
-            using (var conn = _db.GetConnection())
+            using (var conn = db.GetConnection())
             {
                 string query = "SELECT ISNULL(SUM(Points), 0) FROM dbo.Accounts";
                 SqlCommand cmd = new SqlCommand(query, conn);
