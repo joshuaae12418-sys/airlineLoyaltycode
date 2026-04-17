@@ -1,17 +1,12 @@
-﻿using System;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 using AirlineModels;
+using System;
 
 namespace AirlineDataService
 {
-    public class LoyaltyDataService
+    public class LoyaltyDataService : ILoyaltyDataService
     {
-        private readonly DataBase db; 
-
-        public LoyaltyDataService()
-        {
-            db = new DataBase(); 
-        }
+        private readonly DataBase db = new DataBase();
 
         public void AddPoints(int points, string code)
         {
@@ -21,7 +16,6 @@ namespace AirlineDataService
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@pts", points);
                 cmd.Parameters.AddWithValue("@cd", code);
-
                 conn.Open();
                 cmd.ExecuteNonQuery();
             }
@@ -34,7 +28,6 @@ namespace AirlineDataService
                 string query = "SELECT COUNT(1) FROM dbo.Accounts WHERE RedeemedCode = @cd";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@cd", code);
-
                 conn.Open();
                 return (int)cmd.ExecuteScalar() > 0;
             }
@@ -46,7 +39,6 @@ namespace AirlineDataService
             {
                 string query = "SELECT ISNULL(SUM(Points), 0) FROM dbo.Accounts";
                 SqlCommand cmd = new SqlCommand(query, conn);
-
                 conn.Open();
                 return Convert.ToInt32(cmd.ExecuteScalar());
             }

@@ -9,9 +9,10 @@ namespace AirlineManagementAppService
         private readonly ILoyaltyDataService dAtaService;
         private readonly Dictionary<string, int> redeemCodes;
 
-        public LoyaltyService()
+      
+        public LoyaltyService(ILoyaltyDataService serviceProvider)
         {
-            dAtaService = new InMemoryDataService();
+            dAtaService = serviceProvider;
             redeemCodes = new Dictionary<string, int>
             {
                 { "FLYHIGH100", 100 },
@@ -22,14 +23,25 @@ namespace AirlineManagementAppService
             };
         }
 
-         public void Redeem(string code)
+        public void Redeem(string code)
         {
-            if (redeemCodes.ContainsKey(code)) { Console.WriteLine("Invalid code."); return; }
-            if (dAtaService.HasCodeBeenUsed(code)) { Console.WriteLine($"Error: {code} already used."); return; }
+           
+            if (redeemCodes.ContainsKey(code))
+            {
+                if (dAtaService.HasCodeBeenUsed(code))
+                {
+                    Console.WriteLine($"Error: {code} already used.");
+                    return;
+                }
 
-            int points = redeemCodes[code];
-            dAtaService.AddPoints(points, code);
-            Console.WriteLine($"Success! Current Total: {GetPoints()}");
+                int points = redeemCodes[code];
+                dAtaService.AddPoints(points, code);
+                Console.WriteLine($"Success! Current Total: {GetPoints()}");
+            }
+            else
+            {
+                Console.WriteLine("Invalid code.");
+            }
         }
 
         public int GetPoints() => dAtaService.GetPoints();

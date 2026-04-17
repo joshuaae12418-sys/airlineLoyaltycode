@@ -20,11 +20,8 @@ namespace AirlineDataService
         }
 
         public bool HasCodeBeenUsed(string code) => _data.Any(x => x.RedeemedCode == code);
-
         public int GetPoints() => _data.Sum(x => x.Points);
-
         public void UpdatePoints(int points) => AddPoints(points, "MANUAL_EDIT");
-
         public void DeductPoints(int points) => AddPoints(-points, "DEDUCTION");
     }
 }
