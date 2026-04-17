@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using AirlineModels; 
+using AirlineModels;
 
 namespace AirlineDataService
 {
-    public class InMemoryDataService
+    public class InMemoryDataService : ILoyaltyDataService
     {
-        
         private static List<LoyaltyAccount> _data = new List<LoyaltyAccount>();
 
         public void AddPoints(int points, string code)
@@ -22,17 +19,12 @@ namespace AirlineDataService
             });
         }
 
-        public bool HasCodeBeenUsed(string code)
-        {
-            return _data.Any(x => x.RedeemedCode == code);
-        }
+        public bool HasCodeBeenUsed(string code) => _data.Any(x => x.RedeemedCode == code);
 
-        public int GetPoints()
-        {
-            return _data.Sum(x => x.Points);
-        }
+        public int GetPoints() => _data.Sum(x => x.Points);
 
         public void UpdatePoints(int points) => AddPoints(points, "MANUAL_EDIT");
+
         public void DeductPoints(int points) => AddPoints(-points, "DEDUCTION");
     }
 }

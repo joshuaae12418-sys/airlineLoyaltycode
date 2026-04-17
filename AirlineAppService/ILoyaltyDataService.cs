@@ -1,10 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using AirlineModels;
 
 namespace AirlineDataService
 {
-    internal interface ILoyaltyDataService
+    public interface ILoyaltyDataService
     {
+        void AddPoints(int points, string code);
+        bool HasCodeBeenUsed(string code);
+        int GetPoints();
+        void UpdatePoints(int points);
+        void DeductPoints(int points);
     }
 }

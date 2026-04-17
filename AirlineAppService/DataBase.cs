@@ -5,7 +5,7 @@ namespace AirlineDataService
     public class DataBase
     {
         
-        private readonly string connectionString =
+        private string connectionString =
            @"Server=localhost\SQLEXPRESS; Database=AccountManagement; Integrated Security=True; TrustServerCertificate=True; Encrypt=False";
 
         public SqlConnection GetConnection()
